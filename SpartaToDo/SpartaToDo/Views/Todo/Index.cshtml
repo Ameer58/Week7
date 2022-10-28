@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SpartaToDo.Models.Todo>
+﻿@model IEnumerable<SpartaToDo.Models.ViewModels.ToDoViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -28,26 +28,51 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Complete)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Complete)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td class="btn-group-lg btn-group-vertical">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> 
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a> 
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load("current", {packages:["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Status', 'Number'],
+      ['Complete',     @Model.Where(x => x.Complete).Count()],
+      ['Incomplete',   @Model.Where(x => !x.Complete).Count()]
+    ]);
+    var options = {
+      title: 'To Do Completion',
+      pieHole: 0.4,
+    };
+    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+    chart.draw(data, options);
+  }
+</script>
+</div>
+<div>
+<div id="donutchart" style="width: 900px; height: 500px;"></div>
+</div>

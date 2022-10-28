@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SpartaToDo.Services;
 using SpartaToDo.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<SpartaToDoContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IToDoService, ToDoService>();
 
 var app = builder.Build();
 

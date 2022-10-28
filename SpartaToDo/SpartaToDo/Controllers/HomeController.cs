@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SpartaToDo.Models;
+using SpartaToDo.Models.ViewModels;
 using System.Diagnostics;
 
 namespace SpartaToDo.Controllers

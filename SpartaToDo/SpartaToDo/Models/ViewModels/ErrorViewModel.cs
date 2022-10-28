@@ -1,4 +1,4 @@
-namespace SpartaToDo.Models
+namespace SpartaToDo.Models.ViewModels
 {
     public class ErrorViewModel
     {
